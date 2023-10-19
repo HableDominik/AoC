@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -46,5 +47,32 @@ namespace AoC.src.Repository
         private string addZeroIfNeeded(string day) => day.Length is 2 ? day : $"0{day}";
 
         private bool isBetween(int n, int min, int max) => n >= min && n <= max;
+
+        internal string getInput(string year, string day)
+        {
+            validateYearAndDay(year, ref day);
+
+            var basePath = GetProjectRootPath();
+
+            var path = Path.Combine(basePath, $"src\\Puzzles\\{year}\\Day{day}\\Input.txt");
+
+            Console.WriteLine(path);
+
+            if (File.Exists(path))
+            {
+                return File.ReadAllText(path);
+            }
+            else
+            {
+                throw new FileNotFoundException($"{path} not found.");
+            }
+        }
+
+        public static string GetProjectRootPath()
+        {
+            string baseDirectory = AppContext.BaseDirectory;
+            int index = baseDirectory.IndexOf("bin");
+            return baseDirectory[..index];
+        }
     }
 }
