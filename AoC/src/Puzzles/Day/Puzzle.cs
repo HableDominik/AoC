@@ -1,4 +1,4 @@
-﻿namespace AoC.src.Puzzles._20XX.DayXX
+﻿namespace AoC.src.Puzzles._20.Day
 {
     public class Puzzle
     {
