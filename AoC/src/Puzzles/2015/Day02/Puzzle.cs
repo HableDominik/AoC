@@ -14,8 +14,8 @@
             Console.WriteLine($"Result 2: {SolveTask2()}");
         }
 
-        public int SolveTask1() => _presents.Sum(present => present.calculateSurface());
+        public int SolveTask1() => _presents.Sum(present => present.CalculateSurface());
 
-        public int SolveTask2() => _presents.Sum(present => present.calculateRibbon());      
+        public int SolveTask2() => _presents.Sum(present => present.CalculateRibbon());      
     }
 }

@@ -7,8 +7,8 @@
         public Puzzle(string input)
         {
             _input = input;
-            Console.WriteLine("Result 1: " + SolveTask1());
-            Console.WriteLine("Result 2: " + SolveTask2());
+            Console.WriteLine($"Result 1: {SolveTask1()}");
+            Console.WriteLine($"Result 2: {SolveTask2()}");
         }
 
         public string SolveTask1()

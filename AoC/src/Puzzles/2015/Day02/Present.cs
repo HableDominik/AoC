@@ -8,14 +8,14 @@
             (l, w, h) = getLWH(dimensions);
         }
 
-        public int calculateSurface()
+        public int CalculateSurface()
         {
-            var smallestSide = getSmallesSide();
+            var smallestSide = GetSmallesSide();
             var surface = 2 * l * w + 2 * w * h + 2 * h * l;
             return surface + smallestSide;
         }
 
-        private int getSmallesSide() => Math.Min(Math.Min(l * w, w * h), h * l);
+        private int GetSmallesSide() => Math.Min(Math.Min(l * w, w * h), h * l);
 
         private (int l, int w, int h) getLWH(string present)
         {
@@ -27,15 +27,15 @@
             return (l, w, h);
         }
 
-        public int calculateRibbon()
+        public int CalculateRibbon()
         {
-            var mask = getMask();
+            var mask = GetMask();
             var wrap = 2 * l * mask[0] + 2 * w * mask[1] + 2 * h * mask[2];
             var bow = l * w * h;
             return wrap + bow;
         }
 
-        private int[] getMask()
+        private int[] GetMask()
         {
             int[] mask = { 1, 1, 1 };
             if (l >= w && l >= h) mask[0] = 0;

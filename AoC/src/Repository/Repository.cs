@@ -56,8 +56,6 @@ namespace AoC.src.Repository
 
             var path = Path.Combine(basePath, $"src\\Puzzles\\{year}\\Day{day}\\Input.txt");
 
-            Console.WriteLine(path);
-
             if (File.Exists(path))
             {
                 return File.ReadAllText(path);
