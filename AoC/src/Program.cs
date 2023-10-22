@@ -8,7 +8,7 @@ namespace AoC
         public static void Main()
         {
             var year = "2015";
-            var day = "4";
+            var day = "5";
 
             var repository = new Repository();
 
