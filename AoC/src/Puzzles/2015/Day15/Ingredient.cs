@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AoC.src.Puzzles._2015.Day15
+﻿namespace AoC.src.Puzzles._2015.Day15
 {
     internal class Ingredient
     {
@@ -14,13 +8,13 @@ namespace AoC.src.Puzzles._2015.Day15
         internal int Texture { get; set; }
         internal int Calories { get; set; }
 
-        public Ingredient(int cap, int dur, int flav, int text, int cal)
+        public Ingredient(string cap, string dur, string flav, string text, string cal)
         {
-            Capacity = cap;
-            Durability = dur;
-            Flavor = flav;
-            Texture = text;
-            Calories = cal;
+            Capacity = int.Parse(cap);
+            Durability = int.Parse(dur);
+            Flavor = int.Parse(flav);
+            Texture = int.Parse(text);
+            Calories = int.Parse(cal);
         }
 
         public int GetScore() => GetScore(1);
