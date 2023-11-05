@@ -2,29 +2,22 @@
 {
     public class Puzzle
     {
-        private readonly string _input;
+        private readonly List<Compound> sues;
+        private readonly Compound aunt = new Compound("children: 3, cats: 7, samoyeds: 2, pomeranians: 3, akitas: 0, vizslas: 0, goldfish: 5, trees: 3, cars: 2, perfumes: 1");
 
         public Puzzle(string input)
         {
-            _input = input;
+            sues = new();
+            Util.readLines(input)
+                .ForEach((line) => sues.Add(new Compound(line)));
             Console.WriteLine($"Result 1: {SolveTask1()}");
             Console.WriteLine($"Result 2: {SolveTask2()}");
         }
 
         public int SolveTask1()
-        {
-            List<Compound> sues = new();
-            Util.readLines(_input)
-                .ForEach( (line) => sues.Add(new Compound(line)));
-            sues.ForEach(sue => Console.WriteLine(sue));
-            var aunt = new Compound("children: 3, cats: 7, samoyeds: 2, pomeranians: 3, akitas: 0, vizslas: 0, goldfish: 5, trees: 3, cars: 2, perfumes: 1");
+            => sues.FindIndex(sue => sue.IsAunt1(aunt)) + 1;
 
-            return sues.FindIndex(sue => sue.IsAunt(aunt)) + 1;
-        }
-
-        public string SolveTask2()
-        {
-            return string.Empty;
-        }
+        public int SolveTask2()
+            => sues.FindIndex(sue => sue.IsAunt2(aunt)) + 1;
     }
 }

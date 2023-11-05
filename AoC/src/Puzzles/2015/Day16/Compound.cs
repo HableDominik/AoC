@@ -37,18 +37,29 @@ namespace AoC.src.Puzzles._2015.Day16
             return int.Parse(match.Groups[1].Value);
         }
 
-        public bool IsAunt(Compound aunt)
-            => aunt.Children is null || Children == aunt.Children
-                && aunt.Cats is null || Cats == aunt.Cats
-                && aunt.Samoyeds is null || Samoyeds == aunt.Samoyeds
-                && aunt.Pomeranians is null || Pomeranians == aunt.Pomeranians
-                && aunt.Akitas is null || Akitas == aunt.Akitas
-                && aunt.Vizslas is null || Vizslas == aunt.Vizslas
-                && aunt.Goldfish is null || Goldfish == aunt.Goldfish
-                && aunt.Trees is null || Trees == aunt.Trees
-                && aunt.Cars is null || Cars == aunt.Cars
-                && aunt.Perfumes is null || Perfumes == aunt.Perfumes;
+        public bool IsAunt1(Compound aunt)
+            => (Children is null || Children == aunt.Children)
+                && (Cats is null || Cats == aunt.Cats)
+                && (Samoyeds is null || Samoyeds == aunt.Samoyeds)
+                && (Pomeranians is null || Pomeranians == aunt.Pomeranians)
+                && (Akitas is null || Akitas == aunt.Akitas)
+                && (Vizslas is null || Vizslas == aunt.Vizslas)
+                && (Goldfish is null || Goldfish == aunt.Goldfish)
+                && (Trees is null || Trees == aunt.Trees)
+                && (Cars is null || Cars == aunt.Cars)
+                && (Perfumes is null || Perfumes == aunt.Perfumes);
 
+        public bool IsAunt2(Compound aunt)
+            => (Children is null || Children == aunt.Children)
+                && (Cats is null || Cats > aunt.Cats)
+                && (Samoyeds is null || Samoyeds == aunt.Samoyeds)
+                && (Pomeranians is null || Pomeranians < aunt.Pomeranians)
+                && (Akitas is null || Akitas == aunt.Akitas)
+                && (Vizslas is null || Vizslas == aunt.Vizslas)
+                && (Goldfish is null || Goldfish < aunt.Goldfish)
+                && (Trees is null || Trees > aunt.Trees)
+                && (Cars is null || Cars == aunt.Cars)
+                && (Perfumes is null || Perfumes == aunt.Perfumes);
 
         public override string? ToString()
         {
