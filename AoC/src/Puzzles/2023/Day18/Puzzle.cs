@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+using System.Drawing;
+using System.Numerics;
 using System.Reflection;
 using System.Reflection.Metadata;
 
@@ -6,82 +7,84 @@ namespace AoC.src.Puzzles._2023.Day18
 {
     public class Puzzle
     {
-        private record Plan(char Dir, int Dist, string RGB);
-        private readonly List<Plan> _plan;
+        private record Plan(char Dir, int Dist);
+        private readonly List<string> _lines;
 
         public Puzzle(string input)
         {
-            _plan = ParsePlan(Util.readLines(input));
+            _lines = Util.readLines(input);
             Console.WriteLine($"Result 1: {SolveTask1()}");
             Console.WriteLine($"Result 2: {SolveTask2()}");
         }
+        public long SolveTask1() => CalculateVolume(GetBorder(ParsePlan1(_lines)));
 
-        private List<Plan> ParsePlan(List<string> lines)
+        public long SolveTask2() => CalculateVolume(GetBorder(ParsePlan2(_lines)));
+
+        private static List<Plan> ParsePlan1(List<string> lines)
         {
             var plan = new List<Plan>();
-            foreach(var line in lines)
+            foreach (var line in lines)
             {
                 var parts = line.Split(' ');
                 var dist = int.Parse(parts[1]);
-                var RGB = parts[2].Substring(2, parts[2].Length - 3);
-                plan.Add(new Plan(parts[0][0], dist, RGB));
+                plan.Add(new Plan(parts[0][0], dist));
             }
             return plan;
         }
 
-        public int SolveTask1()
+        private static List<Plan> ParsePlan2(List<string> lines)
+        {
+            var plan = new List<Plan>();
+            foreach (var line in lines)
+            {
+                var parts = line.Split(' ');
+                var dist = Convert.ToInt32(parts[2][2..^2], 16);
+                plan.Add(new Plan(parts[2][^2], dist));
+            }
+            return plan;
+        }
+
+        private static List<Point> GetBorder(List<Plan> plan)
         {
             var trench = new List<Point>();
-            var current = new Point(0,0);
+            var current = new Point(0, 0);
             trench.Add(current);
 
-            foreach(var plan in _plan)
+            foreach (var instruction in plan)
             {
-                Point dir = GetDir(plan.Dir);
-                for(int i = 0; i < plan.Dist; i++)
+                Point dir = GetDir(instruction.Dir);
+                for (int i = 0; i < instruction.Dist; i++)
                 {
                     current.Offset(dir);
                     trench.Add(current);
                 }
             }
-
-            var area = Math.Abs(trench.Take(trench.Count - 1)
-                .Select((p, i) => p.X * trench[i + 1].Y - trench[i + 1].X * p.Y)
-            .Sum() / 2);
-
-            var border = trench.Count / 2 + 1;
-
-            return area + border;
+            return trench;
         }
 
-        private void Print(List<Point> points)
+        private static long CalculateVolume(List<Point> trench)
         {
-            var minX = points.Min(p => p.X);
-            var maxX = points.Max(p => p.X);
-            var minY = points.Min(p => p.Y);
-            var maxY = points.Max(p => p.Y);
+            long area = Math.Abs(trench.Take(trench.Count - 1)
+                .Select((p, i) => (long)p.X * trench[i + 1].Y - (long)trench[i + 1].X * p.Y)
+                .Sum() / 2L);
 
-            for(int y = minY; y <= maxY; y++)
-            {
-                for(int x = minX; x <= maxX; x++)
-                {
-                    var current = new Point(x, y);
-                    Console.Write(points.Contains(current) ? "#" : ".");
-                }
-                Console.WriteLine();
-            }
+            long border = trench.Count / 2 + 1;
+
+            return area + border;
         }
 
         private static Point GetDir(char dir)
             => dir switch
             {
-                'R' => new Point(1,0),
-                'D' => new Point(0,1),
-                'L' => new Point(-1,0),
-                'U' => new Point(0,-1),
-                _ => new Point(0,0)
+                'R' => new Point(1, 0),
+                '0' => new Point(1, 0),
+                'D' => new Point(0, 1),
+                '1' => new Point(0, 1),
+                'L' => new Point(-1, 0),
+                '2' => new Point(-1, 0),
+                'U' => new Point(0, -1),
+                '3' => new Point(0, -1),
+                _ => new Point(0, 0)
             };
-
-        public string SolveTask2() => string.Empty;
     }
 }
